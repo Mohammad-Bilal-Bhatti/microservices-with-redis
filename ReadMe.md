@@ -58,6 +58,8 @@ $ npm install
 $ npm run start:dev
 ```
 
+Load [this](./microservices-with-redis-api-collection.json) collection to your postman or insomnia client and test it
+
 Now goto http://localhost:8001/redis-stack/pub-sub and subscribe to view realtime events logs.
 
 You would see event logs as shown
