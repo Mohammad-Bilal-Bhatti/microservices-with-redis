@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # Message Broker
+  messagebroker:
+    image: redis/redis-stack:latest
+    ports:
+      - 6379:6379
+      - 8001:8001
+    restart: unless-stopped
+    networks:
+      - service-network
+  # App Gateway
+  gateway:
+    build: ./gateway
+    ports:
+      - 3000:3000
+    depends_on:
+      - messagebroker
+    environment:
+      - BROKERHOST=messagebroker
+      - BROKERPORT=6379
+    restart: unless-stopped     
+    networks:
+      - service-network
+  # User Service
+  user-service:
+    build: ./user-service
+    depends_on:
+      - messagebroker
+    environment:
+      - BROKERHOST=messagebroker
+      - BROKERPORT=6379
+    restart: unless-stopped     
+    networks:
+      - service-network
+  # Notification Service
+  notification-service:
+    build: ./notification-service
+    environment:
+      - BROKERHOST=messagebroker
+      - BROKERPORT=6379
+    depends_on:
+      - messagebroker
+    restart: unless-stopped
+    networks:
+      - service-network    
+
+# Containers Internal Network
+networks:
+  service-network:
+    driver: bridge

@@ -10,6 +10,23 @@ This is for all deomnstration purpose not production ready.
 
 ## Run Application
 
+### Run via Docker Compose
+
+Go to the root of the directory and run the following command
+
+```sh
+$ docker-compose up -d
+```
+
+For viewing the logs run the following command
+```sh
+$ docker-compose logs -f -t
+```
+
+Now goto http://localhost:8001/redis-stack/pub-sub and subscribe to view realtime events logs.
+
+### Run Normally
+
 Run Redis:
 
 ```sh
@@ -40,3 +57,9 @@ $ cd notification-service
 $ npm install
 $ npm run start:dev
 ```
+
+Now goto http://localhost:8001/redis-stack/pub-sub and subscribe to view realtime events logs.
+
+You would see event logs as shown
+
+![event-logs](./assets/redis-events-logs.png)

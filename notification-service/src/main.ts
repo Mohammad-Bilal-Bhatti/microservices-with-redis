@@ -8,8 +8,10 @@ async function bootstrap() {
     {
       transport: Transport.REDIS,
       options: {
-        host: 'localhost',
-        port: 6379,
+        host: process.env.BROKERHOST || 'localhost',
+        port: process.env.BROKERPORT
+          ? Number.parseInt(process.env.BROKERPORT)
+          : 6379,
       },
     },
   );
